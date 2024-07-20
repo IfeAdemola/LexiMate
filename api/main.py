@@ -1,15 +1,14 @@
-# Fast Api Entry point
+from typing import Union, Dict
 from fastapi import FastAPI
-from src.business_layer import process_word
+from src.word_explorer import generate_explanations
 
 app = FastAPI()
 
+@app.get("/explain/{word}")
+def explain_word(word: str) -> Dict[str, str]:
+    explanation = generate_explanations(word)
+    return {"word": word, "explanation": explanation}
 
-
-@app.post("/receive")
-def receive_word()
-    
-    output = process_word(word)
-
-    return output
-    
+@app.get("/")
+def welcome():
+    return "Welcome to the Word Explorer API!"
